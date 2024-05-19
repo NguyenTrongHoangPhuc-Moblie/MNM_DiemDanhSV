@@ -41,3 +41,31 @@
   }
 }
 
+.sidebar {
+
+}
+
+
+.trigger {
+  align-items: center;
+  display: flex;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-wrapper .search {
+  width: 200px;
+}
+
+.table tr td a {
+  background: none;
+}
+
+.input-wrapper .btn-success {
+  display: flex;
+  align-items: center;
+}

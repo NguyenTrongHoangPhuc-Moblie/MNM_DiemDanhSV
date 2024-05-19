@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Layout } from "antd";
+import MenuList from "./components/MenuList";
 function DanhSachPH() {
   const [data, setData] = useState([]);
 
@@ -10,7 +12,6 @@ function DanhSachPH() {
     result = await result.json();
     setData(result);
   };
-  
 
   useEffect(() => {
     truyXuat();
@@ -26,15 +27,15 @@ function DanhSachPH() {
 
   return (
     <div>
-      <Header />
+      
       <h1>Danh sach phong hoc</h1>
       <div className="col-sm-10 offset-sm-1">
-        <Table>
+        <Table className="table table-bordered">
           <tr>
             <td>MaPH</td>
             <td>TenPH</td>
             <td>DiaChiPH</td>
-            <td colSpan={2}>Chuc nang</td>
+            <td>Chuc nang</td>
           </tr>
           {data.map((item, i) => (
             <tr key={i}>
@@ -42,20 +43,16 @@ function DanhSachPH() {
               <td>{item.TenPH}</td>
               <td>{item.DiaChiPH}</td>
               <td>
-                <span
-                  onClick={() => xoaPhong(item.MaPH)}
-                  className="btn btn-danger"
-                >
-                  Xoa
-                </span>
-              </td>
-              <td>
-                <Link to={`/update/${item.MaPH}`}>
+                <Link>
                   <span
-                    className="btn btn-warning"
+                    onClick={() => xoaPhong(item.MaPH)}
+                    className="btn btn-danger"
                   >
-                    Cap nhat
+                    Xoa
                   </span>
+                </Link>
+                <Link to={`/update/${item.MaPH}`}>
+                  <span className="btn btn-warning">Cap nhat</span>
                 </Link>
               </td>
             </tr>

@@ -8,7 +8,7 @@ function Protected(props) {
         if(
             !localStorage.getItem('user-info'))
             {
-                history("/register")
+                history("/login")
             }
     }, []) 
     return (

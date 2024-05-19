@@ -1,17 +1,28 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { Button } from "react-bootstrap";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
-import AddDepartment from "./AddDepartment";
-import UpdateDepartment from "./UpdateDepartment";
-import EditDepartment from "./EditDepartment";
+import ThemPH from "./PhongHoc/ThemPH";
+import SuaPH from "./PhongHoc/SuaPH";
 import Protected from "./Protected";
-import DanhSachPH from './DanhSachPH';
+import HienThiPH from "./PhongHoc/HienThiPH";
 import SearchPH from "./SearchPH";
+import { Button, Layout, theme } from "antd";
+import { useState } from "react";
+import Index from "./TrangChu/Index";
+import HienThiMH from "./MonHoc/HienThiMH";
+import ThemMH from "./MonHoc/ThemMH";
+import SuaMH from "./MonHoc/SuaMH";
+
+const { Header, Sider } = Layout;
 
 function App() {
+  const [collapsed, setCollapsed] = useState(true);
+
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
   return (
     <div className="App">
       <BrowserRouter>
@@ -20,15 +31,21 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login></Login>}>
           </Route>
-          <Route path="/register" element={<Register></Register>}>
+          {/* <Route path="/register" element={<Register></Register>}>
+          </Route> */}
+          <Route path={"/"} element={<Protected Cmp={Index} />}>
           </Route>
-          <Route path="/" element={<Protected Cmp={DanhSachPH} />}>
+          <Route path={"/listPH"} element={<Protected Cmp={HienThiPH} />}>
           </Route>
-          <Route path="/update/:id" element={<Protected Cmp={UpdateDepartment} />}>
+          <Route path="/update/:id" element={<Protected Cmp={SuaPH} />}>
           </Route>
-          <Route path="/add" element={<Protected Cmp={AddDepartment} />}>
+          <Route path="/add" element={<Protected Cmp={ThemPH} />}>
           </Route>
-          <Route path="/search" element={<Protected Cmp={SearchPH} />}>
+          <Route path={"/listMH"} element={<Protected Cmp={HienThiMH} />}>
+          </Route>
+          <Route path="/capNhatMH/:id" element={<Protected Cmp={SuaMH} />}>
+          </Route>
+          <Route path="/themMH" element={<Protected Cmp={ThemMH} />}>
           </Route>
         </Routes>
       </BrowserRouter>
