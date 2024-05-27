@@ -1,20 +1,18 @@
 import axios from "axios";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
-import { Table } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect, setState, useCallback } from "react";
 import MenuList from "../components/MenuList";
 import Logo from "../components/Logo";
 import { Button, Layout, theme, message } from "antd";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
+import useClosable from "antd/es/_util/hooks/useClosable";
 
 const { Header, Sider, Content } = Layout;
 
-function SuaPH() {
+function SuaNganh() {
   const [collapsed, setCollapsed] = useState(true);
-  const [data, setData] = useState([]);
-  const [TenPH, setTenPH] = useState("");
-  const [DiaChiPH, setDiaChiPH] = useState("");
+  const [TenNganh, setTenNganh] = useState("");
+  const [SoLuongSV, setSoLuongSV] = useState("");
   const history = useNavigate();
 
   const {
@@ -23,18 +21,19 @@ function SuaPH() {
 
   const { id } = useParams();
   const [values, setValues] = useState({
-    MaPH: id,
-    TenPH: "",
-    DiaChiPH: "",
+    MaNganh: id,
+    TenNganh: "",
+    SoLuongSV: "",
   });
+
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/layPH/" + id)
+      .get("http://localhost:8000/api/layNganh/" + id)
       .then((res) => {
         setValues({
           ...values,
-          TenPH: res.data.TenPH,
-          DiaChiPH: res.data.DiaChiPH,
+          TenNganh: res.data.TenNganh,
+          SoLuongSV: res.data.SoLuongSV,
         });
       })
       .catch((err) => console.log(err));
@@ -48,11 +47,12 @@ function SuaPH() {
     formData.forEach((value, key) => {
       data[key] = value;
     });
+
     axios
-      .post(`http://localhost:8000/api/suaPH/${id}`, data)
+      .post(`http://localhost:8000/api/capNhatNganh/${id}`, data)
       .then((res) => {
         message.success("Thành công");
-        history("/listPH");
+        history("/listNganh");
       })
       .catch((err) => {
         alert(err);
@@ -81,39 +81,47 @@ function SuaPH() {
             ></Button>
           </Header>
           <Content>
-            <h1>Cap nhat phong hoc</h1>
-            <form onSubmit={handleSubmit} className="col-sm-4 offset-sm-4">
-              <input
-                className="form-control"
-                type="text"
-                placeholder={values.MaPH}
-              ></input>
-              <br />
+            <h1>Cập nhật ngành học</h1>
+            <form
+              onSubmit={handleSubmit}
+              method="POST"
+              className="col-sm-4 offset-sm-4"
+            >
               <div className="form-floating">
                 <input
                   className="form-control"
                   type="text"
-                  name="TenPH"
-                  defaultValue={values.TenPH}
-                  id="TenPH"
+                  name="MaNganh"
+                  value={values.MaNganh}
                 ></input>
-                <label for="TenPH">Tên phòng</label>
+                <label for="MaNganh">Mã ngành</label>
               </div>
               <br />
               <div className="form-floating">
                 <input
                   className="form-control"
                   type="text"
-                  name="DiaChiPH"
-                  defaultValue={values.DiaChiPH}
-                  id="DiaChiPH"
+                  name="TenNganh"
+                  defaultValue={values.TenNganh}
+                  id="TenNganh"
+                  //onChange={(e) => setTenNganh(e.target.value)}
                 ></input>
-                <label for="DiaChiPH">Địa chỉ phòng</label>
+                <label for="TenNganh">Tên ngành</label>
               </div>
               <br />
-              <button className="btn btn-success">
-                Cập nhật
-              </button>
+              <div className="form-floating">
+                <input
+                  className="form-control"
+                  type="number"
+                  defaultValue={values.SoLuongSV}
+                  name="SoLuongSV"
+                  //onChange={(e) => setSoLuongSV(e.target.name, e.target.value, true)}
+                ></input>
+                <label for="SoLuongSV">Số lượng SV</label>
+              </div>
+
+              <br />
+              <button className="btn btn-success">Cập nhật</button>
             </form>
           </Content>
         </Layout>
@@ -122,4 +130,4 @@ function SuaPH() {
   );
 }
 
-export default SuaPH;
+export default SuaNganh;

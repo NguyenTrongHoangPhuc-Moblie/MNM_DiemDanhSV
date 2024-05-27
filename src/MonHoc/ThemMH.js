@@ -123,7 +123,7 @@ function ThemMH() {
 
                 <br />
                 <button onClick={them} className="btn btn-primary">
-                  Thêm môn học
+                  Thêm
                 </button>
               </form>
             </div>

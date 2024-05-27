@@ -4,14 +4,14 @@ import { Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import MenuList from "../components/MenuList";
 import Logo from "../components/Logo";
-import { Button, Layout, theme, message } from "antd";
+import { Button, Layout, theme } from "antd";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const { Header, Sider, Content } = Layout;
 
-function HienThiMH() {
+function HienThiKhoa() {
   const [collapsed, setCollapsed] = useState(true);
   const [data, setData] = useState([]);
   const [records, setRecords] = useState(data);
@@ -21,7 +21,7 @@ function HienThiMH() {
   } = theme.useToken();
 
   const truyXuat = async () => {
-    let result = await fetch("http://localhost:8000/api/danhSachMH");
+    let result = await fetch("http://localhost:8000/api/danhSachKhoa");
     result = await result.json();
     setData(result);
     setRecords(result);
@@ -29,7 +29,7 @@ function HienThiMH() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/danhSachMH")
+      .get("http://localhost:8000/api/danhSachKhoa")
       .then((res) => {
         setData(res.data);
         setRecords(res.data);
@@ -37,21 +37,22 @@ function HienThiMH() {
       .catch((err) => console.log(err));
   }, []);
 
-  async function xoaMH(id) {
-    let result = fetch("http://localhost:8000/api/xoaMH/" + id, {
+  async function xoaKhoa(id) {
+    let result = fetch("http://localhost:8000/api/xoaKhoa/" + id, {
       method: "DELETE",
     });
     result = (await result).json();
     truyXuat();
-    message.success("Thành công")
   }
 
   const Filter = (event) => {
-    const inputValue = event.target.value.toLowerCase();
+    const inputValue = event.target.value.toLowerCase(); // Lấy giá trị của trường nhập liệu và chuyển đổi thành chữ thường
+    //setRecords(data.filter(f => f.TenPH))
     const newData = data.filter(
       (item) =>
-        item.MaMH.toLowerCase().includes(inputValue) ||
-        item.TenMH.toLowerCase().includes(inputValue)
+        item.MaPH.toLowerCase().includes(inputValue) ||
+        item.TenPH.toLowerCase().includes(inputValue) ||
+        item.DiaChiPH.toLowerCase().includes(inputValue)
     );
     setRecords(newData);
   };
@@ -78,7 +79,7 @@ function HienThiMH() {
             ></Button>
           </Header>
           <Content>
-            <h1>Danh sách môn học</h1>
+            <h1>Danh sách khoa</h1>
             <div className="col-sm-10 offset-sm-1">
               <div className="">
                 <div className="input-wrapper">
@@ -91,7 +92,7 @@ function HienThiMH() {
                   <Button
                     className="btn btn-success"
                   >
-                    <Link to="/themMH">
+                    <Link to="/themKhoa">
                       <FontAwesomeIcon icon={faPlus} />
                     </Link>
                   </Button>
@@ -99,32 +100,26 @@ function HienThiMH() {
               </div>
               <Table className="table table-bordered">
                 <tr>
-                  <td>Mã MH</td>
-                  <td>Tên MH</td>
-                  <td>Số tiết lý thuyết</td>
-                  <td>Số tiết thực hành</td>
-                  <td>Tổng số tiết</td>
-                  <td>Số tín chỉ</td>
+                  <td>Mã Khoa</td>
+                  <td>Tên Khoa</td>
+                  <td>Số lượng SV</td>
                   <td>Chức năng</td>
                 </tr>
                 {records.map((item, i) => (
                   <tr key={i}>
-                    <td>{item.MaMH}</td>
-                    <td>{item.TenMH}</td>
-                    <td>{item.SoTietLyThuyet}</td>
-                    <td>{item.SoTietThucHanh}</td>
-                    <td>{item.TongSoTiet}</td>
-                    <td>{item.SoTinChi}</td>
+                    <td>{item.MaKhoa}</td>
+                    <td>{item.TenKhoa}</td>
+                    <td>{item.SoLuongSV}</td>
                     <td>
                       <Link>
                         <span
-                          onClick={() => xoaMH(item.MaMH)}
+                          onClick={() => xoaKhoa(item.MaKhoa)}
                           className="btn btn-danger"
                         >
                           Xoá
                         </span>
                       </Link>
-                      <Link to={`/suaMH/${item.MaMH}`}>
+                      <Link to={`/suaKhoa/${item.MaKhoa}`}>
                         <span className="btn btn-warning">Sửa</span>
                       </Link>
                     </td>
@@ -139,4 +134,4 @@ function HienThiMH() {
   );
 }
 
-export default HienThiMH;
+export default HienThiKhoa;

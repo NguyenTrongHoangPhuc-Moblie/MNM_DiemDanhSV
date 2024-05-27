@@ -8,10 +8,11 @@ import { Button, Layout, theme } from "antd";
 import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import Calendar from "../components/Calendar";
 
 const { Header, Sider, Content } = Layout;
 
-function HienThiPH() {
+function HienThiLichHoc() {
   const [collapsed, setCollapsed] = useState(true);
   const [data, setData] = useState([]);
   const [records, setRecords] = useState(data);
@@ -21,7 +22,7 @@ function HienThiPH() {
   } = theme.useToken();
 
   const truyXuat = async () => {
-    let result = await fetch("http://localhost:8000/api/danhSachPH");
+    let result = await fetch("http://localhost:8000/api/danhSachKhoa");
     result = await result.json();
     setData(result);
     setRecords(result);
@@ -29,7 +30,7 @@ function HienThiPH() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/danhSachPH")
+      .get("http://localhost:8000/api/danhSachKhoa")
       .then((res) => {
         setData(res.data);
         setRecords(res.data);
@@ -37,8 +38,8 @@ function HienThiPH() {
       .catch((err) => console.log(err));
   }, []);
 
-  async function xoaPhong(id) {
-    let result = fetch("http://localhost:8000/api/xoaPH/" + id, {
+  async function xoaKhoa(id) {
+    let result = fetch("http://localhost:8000/api/xoaKhoa/" + id, {
       method: "DELETE",
     });
     result = (await result).json();
@@ -47,6 +48,7 @@ function HienThiPH() {
 
   const Filter = (event) => {
     const inputValue = event.target.value.toLowerCase(); // Lấy giá trị của trường nhập liệu và chuyển đổi thành chữ thường
+    //setRecords(data.filter(f => f.TenPH))
     const newData = data.filter(
       (item) =>
         item.MaPH.toLowerCase().includes(inputValue) ||
@@ -78,54 +80,8 @@ function HienThiPH() {
             ></Button>
           </Header>
           <Content>
-            <h1>Danh sách phòng học</h1>
-            <div className="col-sm-10 offset-sm-1">
-              <div className="">
-                <div className="input-wrapper">
-                  <input
-                    className="form-control search"
-                    type="text"
-                    placeholder="Tìm kiếm..."
-                    onChange={Filter}
-                  />
-                  <Button
-                    className="btn btn-success"
-                  >
-                    <Link to="/themPH">
-                      <FontAwesomeIcon icon={faPlus} />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-              <Table className="table table-bordered">
-                <tr>
-                  <td>Mã PH</td>
-                  <td>Tên PH</td>
-                  <td>Địa Chỉ PH</td>
-                  <td>Chức năng</td>
-                </tr>
-                {records.map((item, i) => (
-                  <tr key={i}>
-                    <td>{item.MaPH}</td>
-                    <td>{item.TenPH}</td>
-                    <td>{item.DiaChiPH}</td>
-                    <td>
-                      <Link>
-                        <span
-                          onClick={() => xoaPhong(item.MaPH)}
-                          className="btn btn-danger"
-                        >
-                          Xoá
-                        </span>
-                      </Link>
-                      <Link to={`/suaPH/${item.MaPH}`}>
-                        <span className="btn btn-warning">Sửa</span>
-                      </Link>
-                    </td>
-                  </tr>
-                ))}
-              </Table>
-            </div>
+            <h1>Danh sách khoa</h1>
+            <Calendar />
           </Content>
         </Layout>
       </Layout>
@@ -133,4 +89,4 @@ function HienThiPH() {
   );
 }
 
-export default HienThiPH;
+export default HienThiLichHoc;

@@ -11,7 +11,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const { Header, Sider, Content } = Layout;
 
-function HienThiMH() {
+function HienThiTD() {
   const [collapsed, setCollapsed] = useState(true);
   const [data, setData] = useState([]);
   const [records, setRecords] = useState(data);
@@ -21,7 +21,7 @@ function HienThiMH() {
   } = theme.useToken();
 
   const truyXuat = async () => {
-    let result = await fetch("http://localhost:8000/api/danhSachMH");
+    let result = await fetch("http://localhost:8000/api/danhSachTD");
     result = await result.json();
     setData(result);
     setRecords(result);
@@ -29,7 +29,7 @@ function HienThiMH() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/danhSachMH")
+      .get("http://localhost:8000/api/danhSachTD")
       .then((res) => {
         setData(res.data);
         setRecords(res.data);
@@ -37,8 +37,8 @@ function HienThiMH() {
       .catch((err) => console.log(err));
   }, []);
 
-  async function xoaMH(id) {
-    let result = fetch("http://localhost:8000/api/xoaMH/" + id, {
+  async function xoaTD(id) {
+    let result = fetch("http://localhost:8000/api/xoaTD/" + id, {
       method: "DELETE",
     });
     result = (await result).json();
@@ -50,8 +50,8 @@ function HienThiMH() {
     const inputValue = event.target.value.toLowerCase();
     const newData = data.filter(
       (item) =>
-        item.MaMH.toLowerCase().includes(inputValue) ||
-        item.TenMH.toLowerCase().includes(inputValue)
+        item.MaTD.toLowerCase().includes(inputValue) ||
+        item.TenTD.toLowerCase().includes(inputValue)
     );
     setRecords(newData);
   };
@@ -78,7 +78,7 @@ function HienThiMH() {
             ></Button>
           </Header>
           <Content>
-            <h1>Danh sách môn học</h1>
+            <h1>Danh sách trình độ</h1>
             <div className="col-sm-10 offset-sm-1">
               <div className="">
                 <div className="input-wrapper">
@@ -91,7 +91,7 @@ function HienThiMH() {
                   <Button
                     className="btn btn-success"
                   >
-                    <Link to="/themMH">
+                    <Link to="/themTD">
                       <FontAwesomeIcon icon={faPlus} />
                     </Link>
                   </Button>
@@ -99,32 +99,24 @@ function HienThiMH() {
               </div>
               <Table className="table table-bordered">
                 <tr>
-                  <td>Mã MH</td>
-                  <td>Tên MH</td>
-                  <td>Số tiết lý thuyết</td>
-                  <td>Số tiết thực hành</td>
-                  <td>Tổng số tiết</td>
-                  <td>Số tín chỉ</td>
+                  <td>Mã TD</td>
+                  <td>Tên TD</td>
                   <td>Chức năng</td>
                 </tr>
                 {records.map((item, i) => (
                   <tr key={i}>
-                    <td>{item.MaMH}</td>
-                    <td>{item.TenMH}</td>
-                    <td>{item.SoTietLyThuyet}</td>
-                    <td>{item.SoTietThucHanh}</td>
-                    <td>{item.TongSoTiet}</td>
-                    <td>{item.SoTinChi}</td>
+                    <td>{item.MaTD}</td>
+                    <td>{item.TenTD}</td>
                     <td>
                       <Link>
                         <span
-                          onClick={() => xoaMH(item.MaMH)}
+                          onClick={() => xoaTD(item.MaTD)}
                           className="btn btn-danger"
                         >
                           Xoá
                         </span>
                       </Link>
-                      <Link to={`/suaMH/${item.MaMH}`}>
+                      <Link to={`/suaTD/${item.MaTD}`}>
                         <span className="btn btn-warning">Sửa</span>
                       </Link>
                     </td>
@@ -139,4 +131,4 @@ function HienThiMH() {
   );
 }
 
-export default HienThiMH;
+export default HienThiTD;

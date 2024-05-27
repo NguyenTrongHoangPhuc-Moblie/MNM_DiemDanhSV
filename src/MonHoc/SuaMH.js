@@ -48,20 +48,21 @@ function SuaMH() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append("TenMH", TenMH);
-    formData.append("SoTietLyThuyet", SoTietLyThuyet);
-    formData.append("SoTietThucHanh", SoTietThucHanh);
-    formData.append("TongSoTiet", TongSoTiet);
-    formData.append("SoTinChi", SoTinChi);
-    console.log(formData.data)
-    axios.post(`http://localhost:8000/api/capNhatMH/${id}`, formData)
-    .then(res => {
-      message.success("Thành công")
-      history('/listMH');
-    }).catch((err) => {
-      alert(err)
-    })
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
+    axios
+      .post(`http://localhost:8000/api/capNhatMH/${id}`, data)
+      .then((res) => {
+        message.success("Thành công");
+        history("/listMH");
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
 
   return (
@@ -87,50 +88,75 @@ function SuaMH() {
           </Header>
           <Content>
             <h1>Cập nhật môn học</h1>
-            <form className="col-sm-4 offset-sm-4">
-              <input
-                className="form-control"
-                type="text"
-                placeholder={values.MaMH}
-                
-              ></input>
+            <form onSubmit={handleSubmit} method="POST" className="col-sm-4 offset-sm-4">
+              <div className="form-floating">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="MaMH"
+                  value={values.MaMH}
+                ></input>
+                <label for="MaMH">Mã môn học</label>
+              </div>
               <br />
-              <input
-                className="form-control"
-                type="text"
-                placeholder={values.TenMH}
-                onChange={(e) => setTenMH(e.target.value)}
-              ></input>
+              <div className="form-floating">
+                <input
+                  className="form-control"
+                  type="text"
+                  name="TenMH"
+                  defaultValue={values.TenMH}
+                  //onChange={(e) => setTenMH(e.target.value)}
+                ></input>
+                <label for="TenMH">Tên môn học</label>
+              </div>
               <br />
-              <input
-                className="form-control"
-                type="number"
-                placeholder={values.SoTietLyThuyet}
-                onChange={(e) => setSoTietLyThuyet(e.target.value)}
-              ></input>
+              <div className="form-floating">
+                <input
+                  className="form-control"
+                  type="number"
+                  name="SoTietLyThuyet"
+                  defaultValue={values.SoTietLyThuyet}
+                  //onChange={(e) => setSoTietLyThuyet(e.target.value)}
+                ></input>
+                <label for="SoTietLyThuyet">Số tiết lý thuyết</label>
+              </div>
               <br />
-              <input
-                className="form-control"
-                type="number"
-                placeholder={values.SoTietThucHanh}
-                onChange={(e) => setSoTietThucHanh(e.target.value)}
-              ></input>
+              <div className="form-floating">
+                <input
+                  className="form-control"
+                  type="number"
+                  name="SoTietThucHanh"
+                  defaultValue={values.SoTietThucHanh}
+                  //onChange={(e) => setSoTietThucHanh(e.target.value)}
+                ></input>
+                <label for="SoTietThucHanh">Số tiết thực hành</label>
+              </div>
               <br />
-              <input
-                className="form-control"
-                type="number"
-                placeholder={values.TongSoTiet}
-                onChange={(e) => setTongSoTiet(e.target.value)}
-              ></input>
+              <div className="form-floating">
+                <input
+                  className="form-control"
+                  type="number"
+                  name="TongSoTiet"
+                  defaultValue={values.TongSoTiet}
+                  //onChange={(e) => setTongSoTiet(e.target.value)}
+                ></input>
+                <label for="TongSoTiet">Tổng số tiết</label>
+              </div>
               <br />
-              <input
-                className="form-control"
-                type="number"
-                placeholder={values.SoTinChi}
-                onChange={(e) => setSoTinChi(e.target.value)}
-              ></input>
+              <div className="form-floating">
+                <input
+                  className="form-control"
+                  type="number"
+                  name="SoTinChi"
+                  defaultValue={values.SoTinChi}
+                  onChange={(e) => setSoTinChi(e.target.value)}
+                ></input>
+                <label for="SoTinChi">Số tín chỉ</label>
+              </div>
               <br />
-              <button onClick={handleSubmit} className="btn btn-success">Cập nhật môn học</button>
+              <button className="btn btn-success">
+                Cập nhật
+              </button>
             </form>
           </Content>
         </Layout>

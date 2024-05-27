@@ -1,11 +1,5 @@
 import React from "react";
 import { Menu } from "antd";
-// import Login from "../Login";
-// import Register from "../Register";
-// import ThemPH from "../PhongHoc/ThemPH";
-// import SuaPH from "../PhongHoc/SuaPH";
-// import Protected from "../Protected";
-// import HienThiPH from "../PhongHoc/HienThiPH";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -20,6 +14,10 @@ import {
   faTableColumns,
   faRightToBracket,
   faRightFromBracket,
+  faBriefcase,
+  faDna,
+  faFillDrip,
+  faBrain
 } from "@fortawesome/free-solid-svg-icons";
 
 const MenuList = () => {
@@ -79,13 +77,37 @@ const MenuList = () => {
               key="giaovien"
               icon={<FontAwesomeIcon icon={faChalkboardTeacher} />}
             >
-              Giáo Viên
+              <Link to="/listGV">Giáo Viên</Link>
             </Menu.Item>
             <Menu.Item
               key="lichhoc"
               icon={<FontAwesomeIcon icon={faCalendarDays} />}
             >
-              Lịch Học
+            <Link to="/listLH">Lịch Học</Link>
+            </Menu.Item>
+            <Menu.Item
+              key="nganhoc"
+              icon={<FontAwesomeIcon icon={faBriefcase} />}
+            >
+              <Link to="/listNganh">Ngành Học</Link>
+            </Menu.Item>
+            <Menu.Item
+              key="khoa"
+              icon={<FontAwesomeIcon icon={faDna} />}
+            >
+              <Link to="/listKhoa">Khoa</Link>
+            </Menu.Item>
+            <Menu.Item
+              key="chuyemon"
+              icon={<FontAwesomeIcon icon={faFillDrip} />}
+            >
+              <Link to="/listCM">Chuyên môn</Link>
+            </Menu.Item>
+            <Menu.Item
+              key="trinhdo"
+              icon={<FontAwesomeIcon icon={faBrain} />}
+            >
+              <Link to="/listTD">Trình độ</Link>
             </Menu.Item>
           </>
         ) : (
