@@ -26,7 +26,21 @@ import ThemTD from "./TrinhDo/ThemTD";
 import SuaTD from "./TrinhDo/SuaTD";
 import HienThiGiaoVien from "./GiaoVien/HienThiGiaoVien";
 import SuaGiaoVien from "./GiaoVien/SuaGiaoVien";
+import ThemGiaoVien from "./GiaoVien/ThemGiaoVien";
 import HienThiLichHoc from "./LichHoc/HienThiLichHoc";
+import HienThiSV from "./SinhVien/HienThiSV";
+import SuaSV from "./SinhVien/SuaSV";
+import ThemSV from "./SinhVien/ThemSV";
+import HienThiTH from "./TietHoc/HienThiTH";
+import ThemTH from "./TietHoc/ThemTH";
+import SuaTH from "./TietHoc/SuaTH";
+import ThemChiTietNgayHoc from "./ChiTietNgayHoc/ThemChiTietNgayHoc";
+import SuaChiTietNgayHoc from "./ChiTietNgayHoc/SuaChiTietNgayHoc";
+import HienThiDSSV_LHP from "./DanhSachSinhVien_LopHocPhan/HienThiDSSV_LHP";
+import ThemDSSV_LHP from "./DanhSachSinhVien_LopHocPhan/ThemDSSV_LHP";
+import SuaDSSV_LHP from "./DanhSachSinhVien_LopHocPhan/SuaDSSV_LHP";
+import HienThiBangDiemDanh from "./BangDiemDanh/HienThiBangDiemDanh";
+
 
 const { Header, Sider } = Layout;
 
@@ -88,7 +102,33 @@ function App() {
           </Route>
           <Route path={"/suaGV/:id"} element={<Protected Cmp={SuaGiaoVien} />}>
           </Route>
+          <Route path={"/themGV"} element={<Protected Cmp={ThemGiaoVien} />}>
+          </Route>
+          <Route path={"/listTH"} element={<Protected Cmp={HienThiTH} />}>
+          </Route>
+          <Route path={"/suaTH/:id"} element={<Protected Cmp={SuaTH} />}>
+          </Route>
+          <Route path={"/themTH"} element={<Protected Cmp={ThemTH} />}>
+          </Route>
+          <Route path={"/listSV"} element={<Protected Cmp={HienThiSV} />}>
+          </Route>
+          <Route path={"/suaSV/:id"} element={<Protected Cmp={SuaSV} />}>
+          </Route>
+          <Route path={"/themSV"} element={<Protected Cmp={ThemSV} />}>
+          </Route>
           <Route path={"/listLH"} element={<Protected Cmp={HienThiLichHoc} />}>
+          </Route>
+          <Route path={"/themCTNH"} element={<Protected Cmp={ThemChiTietNgayHoc} />}>
+          </Route>
+          <Route path={"/suaCTNH/:id"} element={<Protected Cmp={SuaChiTietNgayHoc} />}>
+          </Route>
+          <Route path={"/listDSSV_LHP"} element={<Protected Cmp={HienThiDSSV_LHP} />}>
+          </Route>
+          <Route path={"/themDSSV_LHP"} element={<Protected Cmp={ThemDSSV_LHP} />}>
+          </Route>
+          <Route path={"/suaDSSV_LHP/:masv/:malop"} element={<Protected Cmp={SuaDSSV_LHP} />}>
+          </Route>
+          <Route path={"/listBDD/:title/:start"} element={<Protected Cmp={HienThiBangDiemDanh} />}>
           </Route>
         </Routes>
       </BrowserRouter>

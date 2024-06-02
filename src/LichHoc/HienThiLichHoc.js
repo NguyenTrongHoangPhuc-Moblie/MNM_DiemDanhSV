@@ -80,7 +80,7 @@ function HienThiLichHoc() {
             ></Button>
           </Header>
           <Content>
-            <h1>Danh sách khoa</h1>
+            <h1>Lịch học</h1>
             <Calendar />
           </Content>
         </Layout>

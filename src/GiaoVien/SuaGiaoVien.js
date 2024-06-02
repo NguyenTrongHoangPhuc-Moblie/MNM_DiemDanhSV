@@ -13,8 +13,12 @@ const { Header, Sider, Content } = Layout;
 function SuaGiaoVien() {
   const [collapsed, setCollapsed] = useState(true);
   const [data, setData] = useState([]);
-  const [TenPH, setTenPH] = useState("");
-  const [DiaChiPH, setDiaChiPH] = useState("");
+  const [HoTenGV, setHoTenGV] = useState("");
+  const [GioiTinh, setGioiTinh] = useState("");
+  const [DiaChi, setDiaChi] = useState("");
+  const [MaCM, setMaCM] = useState("");
+  const [MaTD, setMaTD] = useState("");
+  const [NamSinh, setNamSinh] = useState("")
   const history = useNavigate();
   const [ChuyenMon, setChuyenMon] = useState([]);
   const [TrinhDo, setTrinhDo] = useState([]);
@@ -214,7 +218,7 @@ function SuaGiaoVien() {
                   <option
                     key={item.MaCM}
                     value={item.MaCM}
-                    //selected={item.MaCM == values.MaCM ? "selected" : ""}
+                    selected={item.MaCM == values.MaCM ? "selected" : ""}
                   >
                     {item.TenCM}
                   </option>
@@ -232,7 +236,7 @@ function SuaGiaoVien() {
                   <option
                     key={item.MaTD}
                     value={item.MaTD}
-                    //selected={item.MaTD == values.MaTD ? "selected" : ""}
+                    selected={item.MaTD == values.MaTD ? "selected" : ""}
                   >
                     {item.TenTD}
                   </option>

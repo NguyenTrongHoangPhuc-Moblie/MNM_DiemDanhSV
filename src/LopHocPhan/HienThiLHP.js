@@ -11,7 +11,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const { Header, Sider, Content } = Layout;
 
-function HienThiGiaoVien() {
+function HienThiLopHocPhan() {
   const [collapsed, setCollapsed] = useState(true);
   const [data, setData] = useState([]);
   const [records, setRecords] = useState(data);
@@ -28,7 +28,7 @@ function HienThiGiaoVien() {
   } = theme.useToken();
 
   const truyXuat = async () => {
-    let result = await fetch("http://localhost:8000/api/danhSachGV");
+    let result = await fetch("http://localhost:8000/api/danhSachLHP");
     result = await result.json();
     setData(result);
     setRecords(result);
@@ -36,7 +36,7 @@ function HienThiGiaoVien() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/danhSachGV")
+      .get("http://localhost:8000/api/danhSachLHP")
       .then((res) => {
         setData(res.data);
         setRecords(res.data);
@@ -46,7 +46,7 @@ function HienThiGiaoVien() {
   }, []);
 
   async function xoaGV(id) {
-    let result = fetch("http://localhost:8000/api/xoaGV/" + id, {
+    let result = fetch("http://localhost:8000/api/xoaLHP/" + id, {
       method: "DELETE",
     });
     result = (await result).json();
@@ -108,34 +108,32 @@ function HienThiGiaoVien() {
               </div>
               <Table className="table table-bordered">
                 <tr>
-                  <td>Mã Giáo Viên</td>
-                  <td>Họ Tên Giáo Viên</td>
-                  <td>Năm Sinh</td>
-                  <td>Giới Tính</td>
-                  <td>Địa Chỉ</td>
-                  <td>Chuyên Môn</td>
-                  <td>Trình Độ</td>
+                  <td>Mã lớp</td>
+                  <td>Tên lớp</td>
+                  <td>Sỉ số</td>
+                  <td>Giáo viên</td>
+                  <td>Môn học</td>
+                  <td>Phòng học</td>
                   <td>Chức năng</td>
                 </tr>
                 {ghiLai.map((item, i) => (
                   <tr key={i}>
-                    <td>{item.MaGV}</td>
-                    <td>{item.HoTenGV}</td>
-                    <td>{item.NamSinh}</td>
-                    <td>{item.GioiTinh}</td>
-                    <td>{item.DiaChi}</td>
-                    <td>{item.chuyen_mon.TenCM}</td>
-                    <td>{item.trinh_do.TenTD}</td>
+                    <td>{item.MaLop}</td>
+                    <td>{item.TenLop}</td>
+                    <td>{item.SiSo}</td>
+                    <td>{item.giao_vien.HoTenGV}</td>
+                    <td>{item.mon_hoc.TenMH}</td>
+                    <td>{item.phong_hoc.TenPH}</td>
                     <td>
                       <Link>
                         <span
-                          onClick={() => xoaGV(item.MaGV)}
+                          onClick={() => xoaLHP(item.MaLop)}
                           className="btn btn-danger"
                         >
                           Xoá
                         </span>
                       </Link>
-                      <Link to={`/suaGV/${item.MaGV}`}>
+                      <Link to={`/suaLHP/${item.MaLop}`}>
                         <span className="btn btn-warning">Sửa</span>
                       </Link>
                     </td>
@@ -183,4 +181,4 @@ function HienThiGiaoVien() {
   }
 }
 
-export default HienThiGiaoVien;
+export default HienThiLopHocPhan;

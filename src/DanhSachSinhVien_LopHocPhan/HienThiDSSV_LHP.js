@@ -11,7 +11,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const { Header, Sider, Content } = Layout;
 
-function HienThiGiaoVien() {
+function HienThiDSSV_LHP() {
   const [collapsed, setCollapsed] = useState(true);
   const [data, setData] = useState([]);
   const [records, setRecords] = useState(data);
@@ -28,7 +28,7 @@ function HienThiGiaoVien() {
   } = theme.useToken();
 
   const truyXuat = async () => {
-    let result = await fetch("http://localhost:8000/api/danhSachGV");
+    let result = await fetch("http://localhost:8000/api/danhSachDSSV_LHP");
     result = await result.json();
     setData(result);
     setRecords(result);
@@ -36,7 +36,7 @@ function HienThiGiaoVien() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/danhSachGV")
+      .get("http://localhost:8000/api/danhSachDSSV_LHP")
       .then((res) => {
         setData(res.data);
         setRecords(res.data);
@@ -45,8 +45,8 @@ function HienThiGiaoVien() {
       .catch((err) => console.log(err));
   }, []);
 
-  async function xoaGV(id) {
-    let result = fetch("http://localhost:8000/api/xoaGV/" + id, {
+  async function xoaDSSV_LHP(masv, malop) {
+    let result = fetch("http://localhost:8000/api/xoaDSSV_LHP/" + masv + "/" + malop, {
       method: "DELETE",
     });
     result = (await result).json();
@@ -87,7 +87,7 @@ function HienThiGiaoVien() {
             ></Button>
           </Header>
           <Content>
-            <h1>Danh sách giáo viên</h1>
+            <h1>Danh sách sinh viên thuộc lớp học phần</h1>
             <div className="col-sm-10 offset-sm-1">
               <div className="">
                 <div className="input-wrapper">
@@ -100,7 +100,7 @@ function HienThiGiaoVien() {
                   <Button
                     className="btn btn-success"
                   >
-                    <Link to="/themGV">
+                    <Link to="/themDSSV_LHP">
                       <FontAwesomeIcon icon={faPlus} />
                     </Link>
                   </Button>
@@ -108,34 +108,28 @@ function HienThiGiaoVien() {
               </div>
               <Table className="table table-bordered">
                 <tr>
-                  <td>Mã Giáo Viên</td>
-                  <td>Họ Tên Giáo Viên</td>
-                  <td>Năm Sinh</td>
-                  <td>Giới Tính</td>
-                  <td>Địa Chỉ</td>
-                  <td>Chuyên Môn</td>
-                  <td>Trình Độ</td>
+                  <td>Sinh viên</td>
+                  <td>Lớp học phần</td>
+                  <td>Số lần có mặt</td>
+                  <td>Số lần vắng</td>
                   <td>Chức năng</td>
                 </tr>
                 {ghiLai.map((item, i) => (
                   <tr key={i}>
-                    <td>{item.MaGV}</td>
-                    <td>{item.HoTenGV}</td>
-                    <td>{item.NamSinh}</td>
-                    <td>{item.GioiTinh}</td>
-                    <td>{item.DiaChi}</td>
-                    <td>{item.chuyen_mon.TenCM}</td>
-                    <td>{item.trinh_do.TenTD}</td>
+                    <td>{item.sinh_vien.HoTenSV}</td>
+                    <td>{item.lop_hoc_phan.TenLop}</td>
+                    <td>{item.SoLanCoMat}</td>
+                    <td>{item.SoLanVang}</td>
                     <td>
                       <Link>
                         <span
-                          onClick={() => xoaGV(item.MaGV)}
+                          onClick={() => xoaDSSV_LHP(item.MaSV, item.MaLop)}
                           className="btn btn-danger"
                         >
                           Xoá
                         </span>
                       </Link>
-                      <Link to={`/suaGV/${item.MaGV}`}>
+                      <Link to={`/suaDSSV_LHP/${item.MaSV}/${item.MaLop}`}>
                         <span className="btn btn-warning">Sửa</span>
                       </Link>
                     </td>
@@ -183,4 +177,4 @@ function HienThiGiaoVien() {
   }
 }
 
-export default HienThiGiaoVien;
+export default HienThiDSSV_LHP;

@@ -40,6 +40,7 @@ function Login() {
     });
     result = await result.json();
     localStorage.setItem("user-info", JSON.stringify(result));
+    console.log(result)
     history("/");
   }
   return (

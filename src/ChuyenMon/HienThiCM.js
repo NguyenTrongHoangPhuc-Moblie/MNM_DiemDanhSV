@@ -15,6 +15,13 @@ function HienThiCM() {
   const [collapsed, setCollapsed] = useState(true);
   const [data, setData] = useState([]);
   const [records, setRecords] = useState(data);
+  const [trangHienTai, setTrangHienTai] = useState(1);
+  const recordsMoiTrang = 10;
+  const trangCuoi = trangHienTai * recordsMoiTrang;
+  const trangDau = trangCuoi - recordsMoiTrang;
+  const ghiLai = records.slice(trangDau, trangCuoi);
+  const npage = Math.ceil(records.length / recordsMoiTrang)
+  const soTrang = [...Array(npage + 1).keys()].slice(1)
 
   const {
     token: { colorBgContainer },
@@ -103,7 +110,7 @@ function HienThiCM() {
                   <td>Tên CM</td>
                   <td>Chức năng</td>
                 </tr>
-                {records.map((item, i) => (
+                {ghiLai.map((item, i) => (
                   <tr key={i}>
                     <td>{item.MaCM}</td>
                     <td>{item.TenCM}</td>
@@ -123,12 +130,45 @@ function HienThiCM() {
                   </tr>
                 ))}
               </Table>
+              <nav style={{position: "absolute", left: "50%", transform: "translateX(-50%)"}}>
+                <ul className="pagination">
+                  <li className="page-item">
+                    <a href="#" className="page-link" onClick={trangTruoc}>Prev</a>
+                  </li>
+                  {
+                    soTrang.map((n, i) => (
+                      <li className={`page-item ${trangHienTai === n ? 'active' : ''}`} key={i}>
+                        <a href="#" className="page-link" onClick={()=>changeCPage(n)}>
+                          {n}
+                        </a>
+                      </li>
+                    ))
+                  }
+                  <li className="page-item">
+                    <a href="#" className="page-link" onClick={trangSau}>Next</a>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </Content>
         </Layout>
       </Layout>
     </div>
   );
+
+  function trangSau() {
+    if(trangHienTai !== trangCuoi) {
+      setTrangHienTai(trangHienTai + 1)
+    }
+  }
+  function trangTruoc() {
+    if(trangHienTai !== trangDau) {
+      setTrangHienTai(trangHienTai - 1)
+    }
+  }
+  function changeCPage(id) {
+    setTrangHienTai(id)
+  }
 }
 
 export default HienThiCM;

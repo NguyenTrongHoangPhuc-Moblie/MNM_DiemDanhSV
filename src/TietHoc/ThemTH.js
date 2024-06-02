@@ -7,10 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 const { Header, Sider, Content } = Layout;
 
-function ThemKhoa() {
+function ThemTH() {
   const [collapsed, setCollapsed] = useState(true);
-  const [TenKhoa, setTenKhoa] = useState("");
-  const [SoLuongSV, setSoLuongSV] = useState("");
+  const [TenTH, setTenTH] = useState("");
+  const [GioBD, setGioBD] = useState("");
+  const [GioKT, setGioKT] = useState("");
   const history = useNavigate();
 
   const {
@@ -19,14 +20,15 @@ function ThemKhoa() {
 
   async function them() {
     const formData = new FormData();
-    formData.append("TenKhoa", TenKhoa);
-    formData.append("SoLuongSV", SoLuongSV);
-    let result = await fetch("http://localhost:8000/api/themKhoa", {
+    formData.append("TenTH", TenTH);
+    formData.append("GioBD", GioBD);
+    formData.append("GioKT", GioKT);
+    let result = await fetch("http://localhost:8000/api/themTH", {
       method: "POST",
       body: formData,
     });
     message.success("Thành công");
-    history("/listKhoa");
+    history("/listTH");
   }
   return (
     <div>
@@ -50,31 +52,40 @@ function ThemKhoa() {
             ></Button>
           </Header>
           <Content>
-            <h1>Thêm khoa</h1>
+            <h1>Thêm tiết học</h1>
             <div className="col-sm-6 offset-sm-3">
               <form>
                 <div className="form-floating">
                   <input
                     className="form-control"
                     type="text"
-                    name="TenKhoa"
-                    id="tenng"
-                    onChange={(e) => setTenKhoa(e.target.value)}
+                    name="TenTH"
+                    id="TenTH"
+                    onChange={(e) => setTenTH(e.target.value)}
                   ></input>
-                  <label for="TenKhoa">Tên khoa</label>
+                  <label for="TenTH">Tên tiết học</label>
                 </div>
-
                 <br />
                 <div className="form-floating">
                   <input
                     className="form-control"
-                    type="number"
-                    name="SoLuongSV"
-                    min="0"
-                    max="6000"
-                    onChange={(e) => setSoLuongSV(e.target.value)}
+                    type="time"
+                    name="GioBD"
+                    id="GioBD"
+                    onChange={(e) => setGioBD(e.target.value)}
                   ></input>
-                  <label for="SoLuongSV">Số lượng SV</label>
+                  <label for="GioBD">Giờ bắt đầu</label>
+                </div>
+                <br />
+                <div className="form-floating">
+                  <input
+                    className="form-control"
+                    type="time"
+                    name="GioKT"
+                    id="GioKT"
+                    onChange={(e) => setGioKT(e.target.value)}
+                  ></input>
+                  <label for="GioKT">Giờ kết thúc</label>
                 </div>
                 <br />
                 <button onClick={them} className="btn btn-primary">
@@ -89,4 +100,4 @@ function ThemKhoa() {
   );
 }
 
-export default ThemKhoa;
+export default ThemTH;

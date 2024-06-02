@@ -11,7 +11,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const { Header, Sider, Content } = Layout;
 
-function HienThiGiaoVien() {
+function HienThiSV() {
   const [collapsed, setCollapsed] = useState(true);
   const [data, setData] = useState([]);
   const [records, setRecords] = useState(data);
@@ -28,7 +28,7 @@ function HienThiGiaoVien() {
   } = theme.useToken();
 
   const truyXuat = async () => {
-    let result = await fetch("http://localhost:8000/api/danhSachGV");
+    let result = await fetch("http://localhost:8000/api/danhSachSV");
     result = await result.json();
     setData(result);
     setRecords(result);
@@ -36,17 +36,16 @@ function HienThiGiaoVien() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/danhSachGV")
+      .get("http://localhost:8000/api/danhSachSV")
       .then((res) => {
         setData(res.data);
         setRecords(res.data);
-        //console.log(data);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  async function xoaGV(id) {
-    let result = fetch("http://localhost:8000/api/xoaGV/" + id, {
+  async function xoaSV(id) {
+    let result = fetch("http://localhost:8000/api/xoaSV/" + id, {
       method: "DELETE",
     });
     result = (await result).json();
@@ -55,12 +54,15 @@ function HienThiGiaoVien() {
 
   const Filter = (event) => {
     const inputValue = event.target.value.toLowerCase(); // Lấy giá trị của trường nhập liệu và chuyển đổi thành chữ thường
-    //setRecords(data.filter(f => f.TenPH))
     const newData = data.filter(
       (item) =>
-        item.MaPH.toLowerCase().includes(inputValue) ||
-        item.TenPH.toLowerCase().includes(inputValue) ||
-        item.DiaChiPH.toLowerCase().includes(inputValue)
+        item.MaSV.toLowerCase().includes(inputValue) ||
+        item.HoTenSV.toLowerCase().includes(inputValue) ||
+        item.Email.toLowerCase().includes(inputValue) ||
+        item.SoDienThoai.toLowerCase().includes(inputValue) ||
+        item.khoa.TenKhoa.toLowerCase().includes(inputValue) ||
+        item.nganh.TenNganh.toLowerCase().includes(inputValue) ||
+        item.lop_nien_che.TenLNC.toLowerCase().includes(inputValue)
     );
     setRecords(newData);
   };
@@ -87,7 +89,7 @@ function HienThiGiaoVien() {
             ></Button>
           </Header>
           <Content>
-            <h1>Danh sách giáo viên</h1>
+            <h1>Danh sách sinh viên</h1>
             <div className="col-sm-10 offset-sm-1">
               <div className="">
                 <div className="input-wrapper">
@@ -100,7 +102,7 @@ function HienThiGiaoVien() {
                   <Button
                     className="btn btn-success"
                   >
-                    <Link to="/themGV">
+                    <Link to="/themSV">
                       <FontAwesomeIcon icon={faPlus} />
                     </Link>
                   </Button>
@@ -108,34 +110,40 @@ function HienThiGiaoVien() {
               </div>
               <Table className="table table-bordered">
                 <tr>
-                  <td>Mã Giáo Viên</td>
-                  <td>Họ Tên Giáo Viên</td>
-                  <td>Năm Sinh</td>
-                  <td>Giới Tính</td>
-                  <td>Địa Chỉ</td>
-                  <td>Chuyên Môn</td>
-                  <td>Trình Độ</td>
+                  <td>Mã SV</td>
+                  <td>Họ Tên SV</td>
+                  <td>Giới tính</td>
+                  <td>Ngày sinh</td>
+                  <td>Số điện thoại</td>
+                  <td>Email</td>
+                  <td>Địa chỉ</td>
+                  <td>Tên khoa</td>
+                  <td>Tên ngành</td>
+                  <td>Lớp niên chế</td>
                   <td>Chức năng</td>
                 </tr>
                 {ghiLai.map((item, i) => (
                   <tr key={i}>
-                    <td>{item.MaGV}</td>
-                    <td>{item.HoTenGV}</td>
-                    <td>{item.NamSinh}</td>
+                    <td>{item.MaSV}</td>
+                    <td>{item.HoTenSV}</td>
                     <td>{item.GioiTinh}</td>
+                    <td>{item.NgaySinh}</td>
+                    <td>{item.SoDienThoai}</td>
+                    <td>{item.Email}</td>
                     <td>{item.DiaChi}</td>
-                    <td>{item.chuyen_mon.TenCM}</td>
-                    <td>{item.trinh_do.TenTD}</td>
+                    <td>{item.khoa.TenKhoa}</td>
+                    <td>{item.nganh.TenNganh}</td>
+                    <td>{item.lop_nien_che.TenLNC}</td>
                     <td>
                       <Link>
                         <span
-                          onClick={() => xoaGV(item.MaGV)}
+                          onClick={() => xoaSV(item.MaSV)}
                           className="btn btn-danger"
                         >
                           Xoá
                         </span>
                       </Link>
-                      <Link to={`/suaGV/${item.MaGV}`}>
+                      <Link to={`/suaSV/${item.MaSV}`}>
                         <span className="btn btn-warning">Sửa</span>
                       </Link>
                     </td>
@@ -183,4 +191,4 @@ function HienThiGiaoVien() {
   }
 }
 
-export default HienThiGiaoVien;
+export default HienThiSV;

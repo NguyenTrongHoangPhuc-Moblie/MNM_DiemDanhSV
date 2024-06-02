@@ -17,7 +17,8 @@ import {
   faBriefcase,
   faDna,
   faFillDrip,
-  faBrain
+  faBrain,
+  faPersonChalkboard,
 } from "@fortawesome/free-solid-svg-icons";
 
 const MenuList = () => {
@@ -62,13 +63,19 @@ const MenuList = () => {
               key="lophocphan"
               icon={<FontAwesomeIcon icon={faChalkboard} />}
             >
-              Lớp Học Phần
+              <Link to="/listLHP">Lớp Học Phần</Link>
+            </Menu.Item>
+            <Menu.Item
+              key="tiethoc"
+              icon={<FontAwesomeIcon icon={faPersonChalkboard} />}
+            >
+              <Link to="/listTH">Tiết học</Link>
             </Menu.Item>
             <Menu.Item
               key="sinhvien"
               icon={<FontAwesomeIcon icon={faGraduationCap} />}
             >
-              Sinh Viên
+              <Link to="/listSV">Sinh Viên</Link>
             </Menu.Item>
             <Menu.Item key="monhoc" icon={<FontAwesomeIcon icon={faBook} />}>
               <Link to="/listMH">Môn Học</Link>

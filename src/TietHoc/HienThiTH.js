@@ -11,7 +11,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const { Header, Sider, Content } = Layout;
 
-function HienThiGiaoVien() {
+function HienThiTH() {
   const [collapsed, setCollapsed] = useState(true);
   const [data, setData] = useState([]);
   const [records, setRecords] = useState(data);
@@ -28,7 +28,7 @@ function HienThiGiaoVien() {
   } = theme.useToken();
 
   const truyXuat = async () => {
-    let result = await fetch("http://localhost:8000/api/danhSachGV");
+    let result = await fetch("http://localhost:8000/api/danhSachTH");
     result = await result.json();
     setData(result);
     setRecords(result);
@@ -36,17 +36,16 @@ function HienThiGiaoVien() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/danhSachGV")
+      .get("http://localhost:8000/api/danhSachTH")
       .then((res) => {
         setData(res.data);
         setRecords(res.data);
-        //console.log(data);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  async function xoaGV(id) {
-    let result = fetch("http://localhost:8000/api/xoaGV/" + id, {
+  async function xoaTH(id) {
+    let result = fetch("http://localhost:8000/api/xoaTH/" + id, {
       method: "DELETE",
     });
     result = (await result).json();
@@ -55,12 +54,11 @@ function HienThiGiaoVien() {
 
   const Filter = (event) => {
     const inputValue = event.target.value.toLowerCase(); // Lấy giá trị của trường nhập liệu và chuyển đổi thành chữ thường
-    //setRecords(data.filter(f => f.TenPH))
     const newData = data.filter(
       (item) =>
-        item.MaPH.toLowerCase().includes(inputValue) ||
-        item.TenPH.toLowerCase().includes(inputValue) ||
-        item.DiaChiPH.toLowerCase().includes(inputValue)
+        item.MaTH.toLowerCase().includes(inputValue) ||
+        item.TenTH.toLowerCase().includes(inputValue) ||
+        item.DiaChiTH.toLowerCase().includes(inputValue)
     );
     setRecords(newData);
   };
@@ -87,7 +85,7 @@ function HienThiGiaoVien() {
             ></Button>
           </Header>
           <Content>
-            <h1>Danh sách giáo viên</h1>
+            <h1>Danh sách tiết học</h1>
             <div className="col-sm-10 offset-sm-1">
               <div className="">
                 <div className="input-wrapper">
@@ -100,7 +98,7 @@ function HienThiGiaoVien() {
                   <Button
                     className="btn btn-success"
                   >
-                    <Link to="/themGV">
+                    <Link to="/themTH">
                       <FontAwesomeIcon icon={faPlus} />
                     </Link>
                   </Button>
@@ -108,34 +106,27 @@ function HienThiGiaoVien() {
               </div>
               <Table className="table table-bordered">
                 <tr>
-                  <td>Mã Giáo Viên</td>
-                  <td>Họ Tên Giáo Viên</td>
-                  <td>Năm Sinh</td>
-                  <td>Giới Tính</td>
-                  <td>Địa Chỉ</td>
-                  <td>Chuyên Môn</td>
-                  <td>Trình Độ</td>
-                  <td>Chức năng</td>
+                  <td>Mã tiết học</td>
+                  <td>Tên tiết học</td>
+                  <td>Giờ bắt đầu</td>
+                  <td>Giờ kết thúc</td>
                 </tr>
                 {ghiLai.map((item, i) => (
                   <tr key={i}>
-                    <td>{item.MaGV}</td>
-                    <td>{item.HoTenGV}</td>
-                    <td>{item.NamSinh}</td>
-                    <td>{item.GioiTinh}</td>
-                    <td>{item.DiaChi}</td>
-                    <td>{item.chuyen_mon.TenCM}</td>
-                    <td>{item.trinh_do.TenTD}</td>
+                    <td>{item.MaTH}</td>
+                    <td>{item.TenTH}</td>
+                    <td>{item.GioBD}</td>
+                    <td>{item.GioKT}</td>
                     <td>
                       <Link>
                         <span
-                          onClick={() => xoaGV(item.MaGV)}
+                          onClick={() => xoaTH(item.MaTH)}
                           className="btn btn-danger"
                         >
                           Xoá
                         </span>
                       </Link>
-                      <Link to={`/suaGV/${item.MaGV}`}>
+                      <Link to={`/suaTH/${item.MaTH}`}>
                         <span className="btn btn-warning">Sửa</span>
                       </Link>
                     </td>
@@ -183,4 +174,4 @@ function HienThiGiaoVien() {
   }
 }
 
-export default HienThiGiaoVien;
+export default HienThiTH;
